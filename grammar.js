@@ -54,7 +54,13 @@ module.exports = grammar({
 
         condition_not: $ => '!',
 
-        _condition_inner: $ => repeat1(choice($.constant, $.condition_bool, $.condition_not, alias($.condition, 'bracket_parameter'), /[^\]!]/)),
+        _condition_inner: $ => repeat1(choice(
+            $.constant,
+            $.condition_bool,
+            $.condition_not,
+            alias($.condition, 'bracket_parameter'),
+            /[^\]!]/  // fallback text fragment
+        )),
 
         condition_else: $ => seq(caseInsensitive('\\[else\\]')),
 
@@ -71,7 +77,16 @@ module.exports = grammar({
 
         array: $ => seq(
             '[',
-            sep(',', $.array_item),
+            optional(seq(
+                $.array_item,
+                repeat(seq(
+                    optional('\n'),
+                    ',',
+                    optional('\n'),
+                    $.array_item
+                ))
+            )),
+            optional('\n'),
             ']'
         ),
 
@@ -89,7 +104,7 @@ module.exports = grammar({
 
         modifier_parameters: $ => seq("(", sep(",", $.modifier_parameter), ")"),
 
-        modifier_parameter: $ => repeat1(choice($.constant, /[^,\)]/, alias($.modifier_parameters, "function"))),
+        modifier_parameter: $ => repeat1(choice($.constant, $.array, /[^,\)]/, alias($.modifier_parameters, "function"))),
 
         _comments: $ => choice($.comment, $.single_line_comment),
 

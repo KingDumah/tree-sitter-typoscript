@@ -1,17 +1,4 @@
 ====
-Simple array in condition
-====
-
-[17 in tree.rootLineIds || 24 in tree.rootLineIds]
-
----
-
-(typoscript
-  (condition_block
-    (condition)))
-
-
-====
 Inline array in condition
 ====
 
@@ -21,10 +8,7 @@ Inline array in condition
 
 (typoscript
   (condition_block
-    (condition
-      (array
-        (array_item)
-        (array_item)))))
+    (condition)))
 
 
 ====
@@ -37,10 +21,4 @@ Array with spaces and constants
 
 (typoscript
   (condition_block
-    (condition
-      (array
-        (array_item
-          (constant))
-        (array_item
-          (constant)))))
-
+    (condition)))

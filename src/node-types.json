@@ -406,6 +406,10 @@
       "required": false,
       "types": [
         {
+          "type": "array",
+          "named": true
+        },
+        {
           "type": "constant",
           "named": true
         }
