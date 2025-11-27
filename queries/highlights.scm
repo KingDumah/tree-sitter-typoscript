@@ -34,6 +34,9 @@
   (multiline_value)
 ] @string
 
+(array) @punctuation.bracket
+(array_item) @string
+
 [
   "="
   ">"
