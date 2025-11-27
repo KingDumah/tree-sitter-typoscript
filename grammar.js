@@ -62,16 +62,8 @@ module.exports = grammar({
 
         constant: $ => seq('{$', /[a-zA-Z0-9_\-\\\.]+/, '}'),
 
-        array: $ => seq('[', sep(',', $.array_item), ']'),
-
-        array_item: $ => choice(
-            $.string,
-            $.constant,
-            /[^\[\],]+/
-        ),
-
         value: $ => choice(
-            $.array,
+            /\[[^\]]*\]/,
             repeat1(choice(/[^\n]/, $.constant))
         ),
 
