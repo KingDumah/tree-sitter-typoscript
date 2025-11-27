@@ -65,9 +65,17 @@ module.exports = grammar({
         constant: $ => seq('{$', /[a-zA-Z0-9_\-\\\.]+/, '}'),
 
         value: $ => choice(
-            /\[[^\]]*\]/,
+            prec(1, $.array),
             repeat1(choice(/[^\n]/, $.constant))
         ),
+
+        array: $ => seq(
+            '[',
+            sep(',', $.array_item),
+            ']'
+        ),
+
+        array_item: $ => repeat1(choice($.constant, /[^\]\n,]/)),
 
         multiline_value: $ => seq('(', repeat(seq(optional(repeat1(choice($.constant, /[^\n]/))), '\n')), ')'),
 
@@ -142,4 +150,3 @@ function caseInsensitive(keyword) {
         .join('')
     )
 }
-
