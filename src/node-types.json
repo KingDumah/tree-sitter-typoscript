@@ -94,10 +94,6 @@
           "named": true
         },
         {
-          "type": "condition_negation",
-          "named": true
-        },
-        {
           "type": "constant",
           "named": true
         }
@@ -114,10 +110,6 @@
       "types": [
         {
           "type": "condition_bool",
-          "named": true
-        },
-        {
-          "type": "condition_negation",
           "named": true
         },
         {
@@ -208,21 +200,6 @@
     "type": "condition_end",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "condition_negation",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "constant",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "configuration_block",
