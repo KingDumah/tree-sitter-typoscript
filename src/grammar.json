@@ -378,10 +378,6 @@
         {
           "type": "STRING",
           "value": "OR"
-        },
-        {
-          "type": "STRING",
-          "value": "!"
         }
       ]
     },
@@ -467,11 +463,46 @@
         }
       ]
     },
+    "condition_negation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "!"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "constant"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "condition"
+              },
+              "named": false,
+              "value": "bracket_parameter"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[^\\]]"
+            }
+          ]
+        }
+      ]
+    },
     "_condition_inner": {
       "type": "REPEAT1",
       "content": {
         "type": "CHOICE",
         "members": [
+          {
+            "type": "SYMBOL",
+            "name": "condition_negation"
+          },
           {
             "type": "SYMBOL",
             "name": "constant"
