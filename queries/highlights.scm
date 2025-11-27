@@ -45,6 +45,7 @@
   ":="
   "=<"
   (condition_bool)
+  (condition_negation)
 ] @operator
 
 [
