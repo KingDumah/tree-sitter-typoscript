@@ -52,7 +52,9 @@ module.exports = grammar({
 
         _condition_line: $ => seq(choice($.condition_else, repeat1($._condition_segment)), optional($._comments), '\n'),
 
-        _condition_inner: $ => repeat1(choice($.constant, $.condition_bool, alias($.condition, 'bracket_parameter'), /[^\]!]/, '!')),
+        condition_not: $ => '!',
+
+        _condition_inner: $ => repeat1(choice($.constant, $.condition_bool, $.condition_not, alias($.condition, 'bracket_parameter'), /[^\]!]/)),
 
         condition_else: $ => seq(caseInsensitive('\\[else\\]')),
 

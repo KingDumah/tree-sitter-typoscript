@@ -463,6 +463,10 @@
         }
       ]
     },
+    "condition_not": {
+      "type": "STRING",
+      "value": "!"
+    },
     "_condition_inner": {
       "type": "REPEAT1",
       "content": {
@@ -477,6 +481,10 @@
             "name": "condition_bool"
           },
           {
+            "type": "SYMBOL",
+            "name": "condition_not"
+          },
+          {
             "type": "ALIAS",
             "content": {
               "type": "SYMBOL",
@@ -488,10 +496,6 @@
           {
             "type": "PATTERN",
             "value": "[^\\]!]"
-          },
-          {
-            "type": "STRING",
-            "value": "!"
           }
         ]
       }

@@ -41,8 +41,8 @@ enum ts_symbol_identifiers {
   anon_sym_OR = 11,
   anon_sym_LBRACK = 12,
   anon_sym_RBRACK = 13,
-  aux_sym__condition_inner_token1 = 14,
-  anon_sym_BANG = 15,
+  sym_condition_not = 14,
+  aux_sym__condition_inner_token1 = 15,
   aux_sym_condition_else_token1 = 16,
   aux_sym_condition_end_token1 = 17,
   anon_sym_LBRACE = 18,
@@ -133,8 +133,8 @@ static const char * const ts_symbol_names[] = {
   [anon_sym_OR] = "OR",
   [anon_sym_LBRACK] = "[",
   [anon_sym_RBRACK] = "]",
+  [sym_condition_not] = "condition_not",
   [aux_sym__condition_inner_token1] = "_condition_inner_token1",
-  [anon_sym_BANG] = "!",
   [aux_sym_condition_else_token1] = "condition_else_token1",
   [aux_sym_condition_end_token1] = "condition_end_token1",
   [anon_sym_LBRACE] = "block_punctuation",
@@ -225,8 +225,8 @@ static const TSSymbol ts_symbol_map[] = {
   [anon_sym_OR] = anon_sym_OR,
   [anon_sym_LBRACK] = anon_sym_LBRACK,
   [anon_sym_RBRACK] = anon_sym_RBRACK,
+  [sym_condition_not] = sym_condition_not,
   [aux_sym__condition_inner_token1] = aux_sym__condition_inner_token1,
-  [anon_sym_BANG] = anon_sym_BANG,
   [aux_sym_condition_else_token1] = aux_sym_condition_else_token1,
   [aux_sym_condition_end_token1] = aux_sym_condition_end_token1,
   [anon_sym_LBRACE] = anon_sym_LBRACE,
@@ -359,12 +359,12 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = true,
     .named = false,
   },
+  [sym_condition_not] = {
+    .visible = true,
+    .named = true,
+  },
   [aux_sym__condition_inner_token1] = {
     .visible = false,
-    .named = false,
-  },
-  [anon_sym_BANG] = {
-    .visible = true,
     .named = false,
   },
   [aux_sym_condition_else_token1] = {
@@ -850,7 +850,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       if (eof) ADVANCE(198);
       ADVANCE_MAP(
         '\n', 202,
-        '!', 221,
+        '!', 214,
         '"', 309,
         '#', 308,
         '&', 8,
@@ -953,18 +953,18 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 6:
       ADVANCE_MAP(
-        '!', 221,
-        '&', 216,
-        'A', 218,
-        'O', 219,
+        '!', 214,
+        '&', 217,
+        'A', 219,
+        'O', 220,
         '[', 211,
         ']', 213,
-        '{', 215,
-        '|', 220,
-        '\t', 217,
-        ' ', 217,
+        '{', 216,
+        '|', 221,
+        '\t', 218,
+        ' ', 218,
       );
-      if (lookahead != 0) ADVANCE(214);
+      if (lookahead != 0) ADVANCE(215);
       END_STATE();
     case 7:
       if (lookahead == '"') ADVANCE(309);
@@ -1692,47 +1692,47 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       ACCEPT_TOKEN(anon_sym_RBRACK);
       END_STATE();
     case 214:
-      ACCEPT_TOKEN(aux_sym__condition_inner_token1);
+      ACCEPT_TOKEN(sym_condition_not);
       END_STATE();
     case 215:
       ACCEPT_TOKEN(aux_sym__condition_inner_token1);
-      if (lookahead == '$') ADVANCE(227);
       END_STATE();
     case 216:
       ACCEPT_TOKEN(aux_sym__condition_inner_token1);
-      if (lookahead == '&') ADVANCE(207);
+      if (lookahead == '$') ADVANCE(227);
       END_STATE();
     case 217:
       ACCEPT_TOKEN(aux_sym__condition_inner_token1);
+      if (lookahead == '&') ADVANCE(207);
+      END_STATE();
+    case 218:
+      ACCEPT_TOKEN(aux_sym__condition_inner_token1);
       ADVANCE_MAP(
-        '&', 216,
-        'A', 218,
-        'O', 219,
+        '&', 217,
+        'A', 219,
+        'O', 220,
         '[', 211,
-        '{', 215,
-        '|', 220,
-        '\t', 217,
-        ' ', 217,
+        '{', 216,
+        '|', 221,
+        '\t', 218,
+        ' ', 218,
       );
       if (lookahead != 0 &&
           lookahead != ' ' &&
           lookahead != '!' &&
-          lookahead != ']') ADVANCE(214);
-      END_STATE();
-    case 218:
-      ACCEPT_TOKEN(aux_sym__condition_inner_token1);
-      if (lookahead == 'N') ADVANCE(32);
+          lookahead != ']') ADVANCE(215);
       END_STATE();
     case 219:
       ACCEPT_TOKEN(aux_sym__condition_inner_token1);
-      if (lookahead == 'R') ADVANCE(210);
+      if (lookahead == 'N') ADVANCE(32);
       END_STATE();
     case 220:
       ACCEPT_TOKEN(aux_sym__condition_inner_token1);
-      if (lookahead == '|') ADVANCE(208);
+      if (lookahead == 'R') ADVANCE(210);
       END_STATE();
     case 221:
-      ACCEPT_TOKEN(anon_sym_BANG);
+      ACCEPT_TOKEN(aux_sym__condition_inner_token1);
+      if (lookahead == '|') ADVANCE(208);
       END_STATE();
     case 222:
       ACCEPT_TOKEN(aux_sym_condition_else_token1);
@@ -2639,7 +2639,7 @@ static const uint16_t ts_parse_table[LARGE_STATE_COUNT][SYMBOL_COUNT] = {
     [anon_sym_OR] = ACTIONS(1),
     [anon_sym_LBRACK] = ACTIONS(1),
     [anon_sym_RBRACK] = ACTIONS(1),
-    [anon_sym_BANG] = ACTIONS(1),
+    [sym_condition_not] = ACTIONS(1),
     [aux_sym_condition_else_token1] = ACTIONS(1),
     [aux_sym_condition_end_token1] = ACTIONS(1),
     [anon_sym_LBRACE] = ACTIONS(1),
@@ -2941,8 +2941,8 @@ static const uint16_t ts_small_parse_table[] = {
     STATE(39), 1,
       sym_condition,
     ACTIONS(88), 2,
+      sym_condition_not,
       aux_sym__condition_inner_token1,
-      anon_sym_BANG,
     STATE(9), 3,
       sym_condition_bool,
       aux_sym__condition_inner,
@@ -2962,8 +2962,8 @@ static const uint16_t ts_small_parse_table[] = {
     STATE(39), 1,
       sym_condition,
     ACTIONS(100), 2,
+      sym_condition_not,
       aux_sym__condition_inner_token1,
-      anon_sym_BANG,
     STATE(9), 3,
       sym_condition_bool,
       aux_sym__condition_inner,
@@ -2983,8 +2983,8 @@ static const uint16_t ts_small_parse_table[] = {
     STATE(39), 1,
       sym_condition,
     ACTIONS(100), 2,
+      sym_condition_not,
       aux_sym__condition_inner_token1,
-      anon_sym_BANG,
     STATE(9), 3,
       sym_condition_bool,
       aux_sym__condition_inner,
@@ -3032,8 +3032,8 @@ static const uint16_t ts_small_parse_table[] = {
     STATE(39), 1,
       sym_condition,
     ACTIONS(114), 2,
+      sym_condition_not,
       aux_sym__condition_inner_token1,
-      anon_sym_BANG,
     STATE(10), 3,
       sym_condition_bool,
       aux_sym__condition_inner,
@@ -3051,8 +3051,8 @@ static const uint16_t ts_small_parse_table[] = {
     STATE(39), 1,
       sym_condition,
     ACTIONS(116), 2,
+      sym_condition_not,
       aux_sym__condition_inner_token1,
-      anon_sym_BANG,
     STATE(11), 3,
       sym_condition_bool,
       aux_sym__condition_inner,
@@ -3361,8 +3361,8 @@ static const uint16_t ts_small_parse_table[] = {
       anon_sym_OR,
       anon_sym_LBRACK,
       anon_sym_RBRACK,
+      sym_condition_not,
       aux_sym__condition_inner_token1,
-      anon_sym_BANG,
       anon_sym_LBRACE_DOLLAR,
   [808] = 3,
     STATE(75), 1,
@@ -3385,8 +3385,8 @@ static const uint16_t ts_small_parse_table[] = {
       anon_sym_OR,
       anon_sym_LBRACK,
       anon_sym_RBRACK,
+      sym_condition_not,
       aux_sym__condition_inner_token1,
-      anon_sym_BANG,
       anon_sym_LBRACE_DOLLAR,
   [836] = 9,
     ACTIONS(210), 1,
@@ -3415,8 +3415,8 @@ static const uint16_t ts_small_parse_table[] = {
       anon_sym_OR,
       anon_sym_LBRACK,
       anon_sym_RBRACK,
+      sym_condition_not,
       aux_sym__condition_inner_token1,
-      anon_sym_BANG,
       anon_sym_LBRACE_DOLLAR,
   [876] = 1,
     ACTIONS(226), 9,
@@ -3426,8 +3426,8 @@ static const uint16_t ts_small_parse_table[] = {
       anon_sym_OR,
       anon_sym_LBRACK,
       anon_sym_RBRACK,
+      sym_condition_not,
       aux_sym__condition_inner_token1,
-      anon_sym_BANG,
       anon_sym_LBRACE_DOLLAR,
   [888] = 7,
     ACTIONS(228), 1,
