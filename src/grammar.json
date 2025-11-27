@@ -378,10 +378,6 @@
         {
           "type": "STRING",
           "value": "OR"
-        },
-        {
-          "type": "STRING",
-          "value": "!"
         }
       ]
     },

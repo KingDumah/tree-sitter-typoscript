@@ -44,7 +44,7 @@ module.exports = grammar({
 
         _condition_segment: $ => seq($.condition, optional($.condition_bool)),
 
-        condition_bool: $ => choice('&&', '||', 'AND', 'OR', '!'),
+        condition_bool: $ => choice('&&', '||', 'AND', 'OR'),
 
         condition: $ => seq('[', $._condition_inner, ']'),
 
