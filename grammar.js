@@ -44,7 +44,7 @@ module.exports = grammar({
 
         _condition_segment: $ => seq($.condition, optional($.condition_bool)),
 
-        condition_bool: $ => choice('&&', '||', 'AND', 'OR'),
+        condition_bool: $ => choice('&&', '||', 'AND', 'OR', '!'),
 
         condition: $ => seq('[', $._condition_inner, ']'),
 
@@ -73,7 +73,7 @@ module.exports = grammar({
 
         cobject: $ => /(?:CASE|COA|COA_INT|CONTENT|EDITPANEL|FILE|FILES|FLUIDTEMPLATE|HMENU|TMENU|IMAGE|IMG_RESOURCE|LOAD_REGISTER|RECORDS|RESTORE_REGISTER|SVG|TEMPLATE|TEXT|USER|USER_INT|PAGE|EXTBASEPLUGIN|PAGEVIEW)/,
 
-        modifier_predefined: $ => /(prepend|append|remove|replace)String|(addTo|removeFrom|unique|reverse|sort)List/,
+        modifier_predefined: $ => /(prepend|append|remove|replace)String|(addTo|removeFrom|unique|reverse|sort)List|getEnv/,
 
         modifier_function: $ => /[a-zA-Z0-9_\-\\]+/,
 
