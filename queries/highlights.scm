@@ -1,7 +1,4 @@
-(identifier) @property
-
-(copy_identifier) @variable
-(reference_identifier) @variable
+(identifier) @field
 
 (constant) @constant
 
@@ -35,8 +32,10 @@
 [
   (string)
   (multiline_value)
-  (value)
 ] @string
+
+(array) @punctuation.bracket
+(array_item) @string
 
 [
   "="
