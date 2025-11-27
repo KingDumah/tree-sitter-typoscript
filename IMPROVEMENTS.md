@@ -30,23 +30,27 @@ Fehlt komplett - kein `??` in grammar.js
 
 ## 2. ❌ Fehlender Condition Negation Operator
 
-**Status:** Nicht implementiert
-**Priorität:** MEDIUM
+**Status:** Nicht implementiert (komplexer als gedacht)
+**Priorität:** HIGH (für v0.3.2)
 
 **Was fehlt:**
 - `!` (Negation für Conditions)
 
+**Problem:**
+`!` ist ein **unärer Prefix-Operator**, nicht binär wie `&&` oder `||`:
+```typoscript
+[condition1 && condition2]  // && ist binär (zwischen zwei conditions)
+[!condition1]               // ! ist unär (prefix vor condition)
+```
+
+**Warum nicht in v0.3.1:**
+- Kann nicht einfach zu `condition_bool` hinzugefügt werden
+- Benötigt eigene Rule für unäre Prefix-Operatoren in `_condition_inner`
+- Komplexere Grammar-Änderung erforderlich
+
+**Geplant für:** v0.3.2
+
 **Hinweis:** Die TYPO3 Docs listen `and`/`or` auf, aber in der Praxis funktionieren nur `AND`, `OR`, `&&`, `||` - lowercase geht NICHT!
-
-**Aktuelle Grammar (Zeile 47):**
-```javascript
-condition_bool: $ => choice('&&', '||', 'AND', 'OR')
-```
-
-**Sollte sein:**
-```javascript
-condition_bool: $ => choice('&&', '||', 'AND', 'OR', '!')
-```
 
 **Verwendung:**
 ```typoscript
@@ -58,22 +62,18 @@ condition_bool: $ => choice('&&', '||', 'AND', 'OR', '!')
 
 ---
 
-## 3. ❌ Fehlende Modifier Function: `getEnv()`
+## 3. ✅ Modifier Function: `getEnv()` - IMPLEMENTIERT in v0.3.1
 
-**Status:** Nicht implementiert
-**Priorität:** MEDIUM
+**Status:** ✅ Implementiert
+**Version:** v0.3.1
 
 **Verwendung:**
 ```typoscript
 foo := getEnv(MY_ENV_VAR)
+config.apiUrl := getEnv(API_URL)
 ```
 
-**Aktuelle Grammar (Zeile 76):**
-```javascript
-modifier_predefined: $ => /(prepend|append|remove|replace)String|(addTo|removeFrom|unique|reverse|sort)List/
-```
-
-**Sollte sein:**
+**Implementation (Zeile 76):**
 ```javascript
 modifier_predefined: $ => /(prepend|append|remove|replace)String|(addTo|removeFrom|unique|reverse|sort)List|getEnv/
 ```
@@ -164,9 +164,8 @@ value: $ => choice(
 1. **`??` Null Coalescing Operator** hinzufügen (seit v13.1)
 
 ### MEDIUM Priority:
-2. **`!` Negation Operator** für Conditions hinzufügen
-3. **`getEnv()` Modifier Function** hinzufügen
-4. Deprecated cObjects entfernen (EDITPANEL, TEMPLATE, FILE?)
+2. **`!` Negation Operator** für Conditions hinzufügen (geplant für v0.3.2)
+3. Deprecated cObjects entfernen (EDITPANEL, TEMPLATE, FILE?)
 
 ### LOW Priority:
 5. GIFBUILDER cObject hinzufügen
@@ -191,9 +190,11 @@ value: $ => choice(
 - [x] Identifiers mit escaped dots (my\.identifier\.with\.dots)
 
 ### ❌ Fehlt (funktionale Gaps):
-- [ ] Null Coalescing Operator (??)
-- [ ] Negation operator (!)
-- [ ] getEnv() modifier function
+- [ ] Null Coalescing Operator (??) - geplant v0.3.2
+- [ ] Negation operator (!) - geplant v0.3.2
+
+### ✅ Neu in v0.3.1:
+- [x] getEnv() modifier function
 
 ---
 
@@ -202,13 +203,14 @@ value: $ => choice(
 Die Grammar ist **sehr solid und funktional**! Sie unterstützt ~95% aller TypoScript Features korrekt.
 
 **Findings:**
-- 1 HIGH Priority Feature fehlt: `??` Operator (v13.1+)
-- 2 MEDIUM Priority Features fehlen: `!` Negation, `getEnv()` Modifier
+- 1 HIGH Priority Feature fehlt: `??` Operator (v13.1+) → v0.3.2
+- 1 MEDIUM Priority Feature fehlt: `!` Negation → v0.3.2
+- ✅ `getEnv()` implementiert in v0.3.1
 - Alle anderen dokumentierten Features sind implementiert
 
-**Empfehlung (nach Aufwand sortiert):**
-1. **`!` Negation** - EINFACH: Zeile 47, `'!'` ergänzen
-2. **`getEnv()` Modifier** - EINFACH: Zeile 76, `|getEnv` anhängen
-3. **`??` Operator** - KOMPLEX: Neue assignment Rule oder value-Pattern-Logic
+**Roadmap:**
+- **v0.3.1** (DONE): `getEnv()` Modifier
+- **v0.3.2** (NEXT): `!` Negation Operator (unär, benötigt neue Grammar-Rule)
+- **v0.3.3** (FUTURE): `??` Null Coalescing Operator (komplex, neue assignment-Pattern)
 
-**Status:** Extension ist production-ready für TYPO3 v11/v12, neuere v13+ Features (Null Coalescing) fehlen.
+**Status:** Extension ist production-ready für TYPO3 v11/v12/v13 (bis auf `??` in v13.1+).
