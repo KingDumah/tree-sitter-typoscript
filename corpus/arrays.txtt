@@ -1,0 +1,46 @@
+====
+Simple array in condition
+====
+
+[17 in tree.rootLineIds || 24 in tree.rootLineIds]
+
+---
+
+(typoscript
+  (condition_block
+    (condition)))
+
+
+====
+Inline array in condition
+====
+
+[traverse(page, "uid") in [17,24]]
+
+---
+
+(typoscript
+  (condition_block
+    (condition
+      (array
+        (array_item)
+        (array_item)))))
+
+
+====
+Array with spaces and constants
+====
+
+[siteLanguage("locale") in [{$lang.de}, {$lang.en}]]
+
+---
+
+(typoscript
+  (condition_block
+    (condition
+      (array
+        (array_item
+          (constant))
+        (array_item
+          (constant)))))
+
