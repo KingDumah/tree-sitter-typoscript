@@ -378,6 +378,10 @@
         {
           "type": "STRING",
           "value": "OR"
+        },
+        {
+          "type": "STRING",
+          "value": "!"
         }
       ]
     },
@@ -645,7 +649,7 @@
     },
     "modifier_predefined": {
       "type": "PATTERN",
-      "value": "(prepend|append|remove|replace)String|(addTo|removeFrom|unique|reverse|sort)List|getEnv"
+      "value": "(prepend|append|remove|replace)String|(addTo|removeFrom|unique|reverse|sort)List"
     },
     "modifier_function": {
       "type": "PATTERN",
