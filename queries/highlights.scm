@@ -35,7 +35,6 @@
 [
   (string)
   (multiline_value)
-  (value)
 ] @string
 
 (array) @punctuation.bracket
