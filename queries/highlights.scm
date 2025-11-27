@@ -43,6 +43,7 @@
   "<"
   ":="
   "=<"
+  "!"
   (condition_bool)
 ] @operator
 
